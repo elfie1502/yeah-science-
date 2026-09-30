@@ -1,0 +1,15 @@
+# Section 6: Linux Setup on macOS
+
+## Step 1: Docker install Verification
+$ docker --version
+Docker version 29.5.3, build d1c06ef
+
+## Step 2: Ubuntu container initialization
+$ docker run -it --name altair_linux ubuntu:22.04 /bin/bash
+
+## Step 3: Cowsay install within Linux Environment
+root@container:/# apt-get update
+root@container:/# apt-get install -y cowsay
+
+## Step 4: Cowsay output signature verification
+root@container:/# /usr/games/cowsay "This is my own private domicile and i wont be harassed, Mumtahina_240042110!"
