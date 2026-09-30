@@ -56,7 +56,11 @@ ColumnLayout {
             Layout.preferredWidth: 96
             palette.button: "#e63946"
             palette.buttonText: "#ffffff"
-            onClicked: station.stop()
+            onClicked: {
+            station.stop()
+            station.clear_keyboard_input()  // Flush dynamic layout arrays to enforce absolute zero state
+                        }
+
         }
         Button {
             text: "RIGHT  D ▶"

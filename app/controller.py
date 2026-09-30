@@ -31,12 +31,22 @@ class Station(QObject):
         self._speed = config["drive_speed"]
         self._seq = 0
         self._events = []
+                # Dictionary to track active telemetry keystrokes
+        self.keyboard_inputs = {
+            "forward": False,
+            "reverse": False,
+            "left": False,
+            "right": False
+        }
+        self.selected_speed = self.config.get("drive_speed", 0.5)  # Fetch baseline configuration speed modifier
+
         self._invalid = 0
         self._timer = QTimer(self)
         self._timer.setInterval(config["send_period_ms"])
         self._timer.timeout.connect(self.tick)
         self._timer.start()
         self.note("Station ready. Start the simulator, then connect.")
+        
 
     connected = Property(bool, lambda self: self._online, notify=changed)
     armed = Property(bool, lambda self: self._armed, notify=changed)
@@ -160,4 +170,36 @@ class Station(QObject):
     @Slot()
     def shutdown(self):
         self._timer.stop()
-        self.disconnectLink()
+        self.disconnectLink()        
+
+    @Slot(str, bool)
+    def setKeyboardInput(self, direction, pressed):
+        """Update the active keyboard input state maps from QML events"""
+        if not hasattr(self, 'keyboard_inputs'):
+            self.keyboard_inputs = {"forward": False, "reverse": False, "left": False, "right": False}
+            self.selected_speed = self.config.get("drive_speed", 0.5)
+
+        self.keyboard_inputs[direction] = pressed
+        
+        # Read active keys
+        forward = self.keyboard_inputs["forward"]
+        reverse = self.keyboard_inputs["reverse"]
+        left = self.keyboard_inputs["left"]
+        right = self.keyboard_inputs["right"]
+        
+        # Opposing vectors neutralize each other safely
+        if forward and reverse: forward = reverse = False
+        if left and right: left = right = False
+        
+        # Determine speed and turn vectors
+        speed = self.selected_speed if forward else (-self.selected_speed if reverse else 0.0)
+        turn = -1.0 if left else (1.0 if right else 0.0)
+        
+        # Send the final values to the motor driver
+        self.setDrive(speed, turn)
+
+    @Slot()
+    def clear_keyboard_input(self):
+        """Emergency safe stop routing to wipe all direction indexes"""
+        self.keyboard_inputs = {"forward": False, "reverse": False, "left": False, "right": False}
+        self.setDrive(0.0, 0.0)

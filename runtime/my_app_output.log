@@ -1,0 +1,7 @@
+2026-09-29 23:42:04,630 INFO station: Station ready. Start the simulator, then connect.
+qt.qpa.fonts: Populating font family aliases took 72 ms. Replace uses of missing font family "Segoe UI" with one that exists to avoid this cost. 
+2026-09-29 23:43:40,468 INFO station: Datalink opened on port 45821
+2026-09-29 23:43:44,783 INFO station: Drive enabled
+2026-09-29 23:43:55,848 INFO station: Drive disabled
+2026-09-29 23:43:58,767 INFO station: Drive enabled
+2026-09-29 23:45:51,889 INFO station: Datalink closed

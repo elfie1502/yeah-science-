@@ -15,6 +15,64 @@ ApplicationWindow {
     palette.base: "#0f151d"
     font.family: "Segoe UI"
     onActiveChanged: if (!active) station.stop()
+        Item {
+        focus: true  // Global listener tracking context
+        
+        Keys.onPressed: (event) => {
+            if (event.isAutoRepeat) return;  // Ignore hardware auto-repeat noise
+            
+            switch(event.key) {
+                case Qt.Key_W:
+                case Qt.Key_Up:
+                    station.setKeyboardInput("forward", true)
+                    event.accepted = true
+                    break
+                case Qt.Key_S:
+                case Qt.Key_Down:
+                    station.setKeyboardInput("reverse", true)
+                    event.accepted = true
+                    break
+                case Qt.Key_A:
+                case Qt.Key_Left:
+                    station.setKeyboardInput("left", true)
+                    event.accepted = true
+                    break
+                case Qt.Key_D:
+                case Qt.Key_Right:
+                    station.setKeyboardInput("right", true)
+                    event.accepted = true
+                    break
+            }
+        }
+        
+        Keys.onReleased: (event) => {
+            if (event.isAutoRepeat) return;  // Neutralize switch bounce signals
+            
+            switch(event.key) {
+                case Qt.Key_W:
+                case Qt.Key_Up:
+                    station.setKeyboardInput("forward", false)
+                    event.accepted = true
+                    break
+                case Qt.Key_S:
+                case Qt.Key_Down:
+                    station.setKeyboardInput("reverse", false)
+                    event.accepted = true
+                    break
+                case Qt.Key_A:
+                case Qt.Key_Left:
+                    station.setKeyboardInput("left", false)
+                    event.accepted = true
+                    break
+                case Qt.Key_D:
+                case Qt.Key_Right:
+                    station.setKeyboardInput("right", false)
+                    event.accepted = true
+                    break
+            }
+        }
+    }
+
 
     ColumnLayout {
         anchors.fill: parent; anchors.margins: 18; spacing: 12
@@ -141,4 +199,8 @@ ApplicationWindow {
     }
 
     SettingsPanel { id: settings }
-}
+
+    }
+
+
+

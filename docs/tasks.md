@@ -12,6 +12,10 @@ There is some housekeeping to do:
 - In a Linux terminal, find the entry point and configuration, launch the app, capture output in a file and locate a useful log message. The shell launcher has an executable-permission problem for you to resolve. `python -m app` works independently, so this does not block exploring the app.
 - Briefly explain an important diff from your work and the commands that helped you investigate it.
 - Suppose you accidentally committed to `main`. Explain how you would recover if the commit is only local, and how your approach changes after teammates have based work on a pushed commit. Keep shared history intact.
+Ans:
+Case 1 (Local Only): Run `git branch feature/my-work` to save current work on a new branch, then run `git reset --hard HEAD~1` to roll back main cleanly.
+Case 2 (Remote/Pushed): Use `git revert <commit-hash>` to create a new safe commit that undoes the changes without rewriting shared public history.
+
 
 ## Section 2: Let Him Cook
 

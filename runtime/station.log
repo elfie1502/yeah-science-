@@ -1,0 +1,8 @@
+2026-09-30 21:48:21,847 INFO station: Station ready. Start the simulator, then connect.
+2026-09-30 21:48:21,851 INFO station: Datalink closed
+2026-09-30 21:54:41,728 INFO station: Station ready. Start the simulator, then connect.
+2026-09-30 21:54:41,732 INFO station: Datalink closed
+2026-09-30 21:57:46,350 INFO station: Station ready. Start the simulator, then connect.
+2026-09-30 21:57:56,879 INFO station: Datalink opened on port 45821
+2026-09-30 21:57:56,922 INFO station: First rover telemetry received
+2026-09-30 21:57:58,863 INFO station: Drive enabled

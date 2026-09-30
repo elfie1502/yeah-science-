@@ -35,6 +35,16 @@ Popup {
         TextField {
             objectName: "noteInput"
             Layout.fillWidth: true
+                    onActiveFocusChanged: {
+            if (activeFocus) {
+                station.clear_keyboard_input()  // Neutralize ongoing drive velocities during reports typing
+            }
+        }
+        
+        Keys.onPressed: (event) => {
+            event.accepted = false  // Force the text component to process keystrokes natively
+        }
+
             placeholderText: "What scenario or feature are you testing?"
             palette.base: "#0a0e13"
             palette.text: "#e2e8f0"
